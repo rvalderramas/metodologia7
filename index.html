@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula 7 — Metodologia do Projeto de Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<style>
+:root{--accent:#D9481C}
+html{scroll-behavior:smooth}
+body{margin:0;background:#FAF8F5;color:#201C18;font-family:'Instrument Sans',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration-color:color-mix(in oklab,var(--accent) 40%,transparent);text-underline-offset:3px}
+a:hover{color:color-mix(in oklab,var(--accent) 72%,black)}
+textarea,input{font-family:'Instrument Sans',system-ui,sans-serif}
+textarea:focus,input:focus{outline:2px solid color-mix(in oklab,var(--accent) 55%,white);outline-offset:1px;border-color:var(--accent)}
+input[type=checkbox]{accent-color:var(--accent);width:17px;height:17px;margin:0;flex-shrink:0}
+html.anim [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+html.anim [data-reveal].rv{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html.anim [data-reveal]{opacity:1;transform:none;transition:none}}
+@media print{
+  header.site-head{position:static!important;background:#fff!important;backdrop-filter:none!important}
+  .site-nav,.no-print{display:none!important}
+  html.anim [data-reveal]{opacity:1!important;transform:none!important}
+  body{background:#fff;font-size:10.5pt;line-height:1.45}
+  section{padding-top:16pt!important;padding-bottom:16pt!important}
+  .card,tr,label,li,article>div{break-inside:avoid}
+  textarea{border:1px solid #999!important;background:#fff!important;overflow:visible!important;font-size:10pt!important;padding:5px 7px!important}
+  a{color:inherit;text-decoration:none}
+  html[data-printing] [data-print-me]{border:none!important;box-shadow:none!important;padding:0!important;margin:0!important}
+}
+</style>
+</helmet>
+<header class="site-head" style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(250,248,245,.9);backdrop-filter:blur(12px);border-bottom:1px solid #E7E1D9">
+  <div style="max-width:1180px;margin:0 auto;padding:8px 26px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;line-height:1.25">
+      <a href="#abertura" style="font-family:Sora,sans-serif;font-weight:700;font-size:14px;color:#201C18;text-decoration:none;letter-spacing:-0.01em">Metodologia do Projeto de Design</a>
+      <span style="font-size:11.5px;color:#756E66">Renato Valderramas · Aula 7 — 14/10/2026 — Unidades 3 e 4</span>
+    </div>
+    <nav class="site-nav" style="display:flex;gap:18px;overflow-x:auto;margin-left:auto;scrollbar-width:none">
+      <a href="#metade-1" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Síntese</a>
+      <a href="#afinidade" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Afinidade</a>
+      <a href="#publico" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Público</a>
+      <a href="#painel" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Painel</a>
+      <a href="#diretrizes" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Diretrizes</a>
+      <a href="#relatorio" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Relatório</a>
+      <a href="#pratica-1" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Prática 1</a>
+      <a href="#metade-2" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Gerar</a>
+      <a href="#tecnicas" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Técnicas</a>
+      <a href="#pratica-2" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Prática 2</a>
+      <a href="#fichas" style="font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;white-space:nowrap">Fichas</a>
+      <a href="#para-2110" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">21/10</a>
+      <a href="#referencias" style="font-size:13px;font-weight:500;color:#756E66;text-decoration:none;white-space:nowrap" style-hover="color:var(--accent)">Referências</a>
+    </nav>
+  </div>
+</header>
+<main>
+<section id="abertura" data-reveal="" style="max-width:1120px;margin:0 auto;padding:180px 28px 92px;scroll-margin-top:86px">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:20px">Aula 7 · 14/10/2026 · Unidades 3 e 4</div>
+  <h1 style="margin:0 0 20px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(2.5rem,6.2vw,4.4rem);line-height:1.05;letter-spacing:-0.03em;max-width:17ch;text-wrap:balance">Síntese, diretrizes e abertura da criatividade</h1>
+  <p style="margin:0 0 40px;font-size:clamp(1.05rem,2vw,1.3rem);color:#756E66;max-width:680px;text-wrap:pretty">Das evidências às diretrizes, e das diretrizes às primeiras alternativas.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:44px">
+    <span style="font-size:14px;font-weight:600;padding:9px 18px;border-radius:999px;background:var(--accent);color:#fff">Unidades 3 e 4</span>
+    <span style="font-size:14px;font-weight:600;padding:9px 18px;border-radius:999px;background:#fff;border:1px solid #E7E1D9;color:#3E3830">Relatório de pesquisa em 21/10</span>
+    <span style="font-size:14px;font-weight:600;padding:9px 18px;border-radius:999px;background:#fff;border:1px solid #E7E1D9;color:#3E3830">Exercício com caso fictício</span>
+  </div>
+  <p style="margin:0;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">Hoje todos os grupos trabalham sobre um único caso fictício, o lixo no prédio, já usado nas aulas 4 e 6. Ninguém entrega nada hoje. O objetivo é que cada grupo saia sabendo fazer, sozinho, durante a semana, o que fará com os próprios dados.</p>
+</section>
+
+<section id="metade-1" data-reveal="" style="background:#201C18;color:#FAF8F5;scroll-margin-top:60px">
+  <div style="max-width:1120px;margin:0 auto;padding:110px 28px">
+    <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:18px">Primeira metade</div>
+    <h2 style="margin:0;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;letter-spacing:-0.035em;color:#fff;max-width:14ch;text-wrap:balance">Das evidências às diretrizes</h2>
+  </div>
+</section>
+
+<section id="onde" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">2.1 · Onde estamos e o que muda hoje</div>
+  <h2 style="margin:0 0 24px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">Treinar a síntese sobre o mesmo caso</h2>
+  <p style="margin:0 0 16px;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">A maioria dos grupos ainda está em fase de coleta de dados, e a entrega do relatório de pesquisa foi remanejada para 21/10. Por isso, hoje todos treinaremos&nbsp; a síntese sobre o mesmo caso fictício.<br>Durante a semana, <b>cada grupo deverá repetir o processo com os próprios dados.</b></p>
+  <p style="margin:0 0 44px;font-size:17px;color:#201C18;font-weight:600;max-width:820px;text-wrap:pretty">O Objetivo da síntese é transformar dados soltos em poucas afirmações sustentadas, e essas afirmações depois em diretrizes de projeto.</p>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Sequência da noite</h3>
+  <ol style="margin:0 0 36px;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+    <li class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 16px;border-top:3px solid var(--accent)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:30px;line-height:1;color:var(--accent);margin-bottom:10px">1</div><div style="font-size:14.5px;color:#201C18;font-weight:600;line-height:1.4">Espalhar os dados</div></li>
+    <li class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 16px;border-top:3px solid var(--accent)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:30px;line-height:1;color:var(--accent);margin-bottom:10px">2</div><div style="font-size:14.5px;color:#201C18;font-weight:600;line-height:1.4">Agrupar por afinidade</div></li>
+    <li class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 16px;border-top:3px solid var(--accent)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:30px;line-height:1;color:var(--accent);margin-bottom:10px">3</div><div style="font-size:14.5px;color:#201C18;font-weight:600;line-height:1.4">Dar nome aos grupos</div></li>
+    <li class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 16px;border-top:3px solid var(--accent)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:30px;line-height:1;color:var(--accent);margin-bottom:10px">4</div><div style="font-size:14.5px;color:#201C18;font-weight:600;line-height:1.4">Descrever o público-alvo</div></li>
+    <li class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 16px;border-top:3px solid var(--accent)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:30px;line-height:1;color:var(--accent);margin-bottom:10px">5</div><div style="font-size:14.5px;color:#201C18;font-weight:600;line-height:1.4">Esboçar o painel semântico</div></li>
+    <li class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 16px;border-top:3px solid var(--accent)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:30px;line-height:1;color:var(--accent);margin-bottom:10px">6</div><div style="font-size:14.5px;color:#201C18;font-weight:600;line-height:1.4">Escrever as diretrizes</div></li>
+  </ol>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
+    <div class="card" style="background:#201C18;border-radius:20px;padding:34px;color:#FAF8F5">
+      <div style="font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#B5AEA5;margin-bottom:12px">Regra</div>
+      <p style="margin:0 0 10px;font-family:Sora,sans-serif;font-weight:700;font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.35;color:#fff;text-wrap:balance">Toda diretriz aponta para o dado que a originou. Diretriz sem evidência é opinião.</p>
+      <p style="margin:0;font-size:15px;color:var(--accent);font-weight:700">Esta regra é um dos critérios da Avaliação.</p>
+    </div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:20px;padding:34px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+      <div style="font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px">Dica</div>
+      <p style="margin:0;font-size:16px;color:#3E3830;text-wrap:pretty">Para quem ainda vai coletar, registre uma informação por frase e anote de onde veio, como “entrevista 3” ou “observação no local X”. Isso economiza tempo na síntese.</p>
+    </div>
+  </div>
+</section>
+
+<section id="afinidade" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">2.2 · Agrupamento por afinidade</div>
+  <h2 style="margin:0 0 24px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">De baixo para cima, por semelhança</h2>
+  <p style="margin:0 0 44px;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">Técnica para organizar muitos dados qualitativos reunindo-os por semelhança, de baixo para cima, sem categorias definidas de antemão. É conhecida também como método KJ, em referência ao antropólogo japonês Jiro Kawakita, que a sistematizou.</p>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Como fazer</h3>
+  <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+    <div class="card" style="display:flex;gap:20px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:22px 26px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);min-width:34px">1</span><p style="margin:0;font-size:16px;color:#3E3830;text-wrap:pretty"><strong style="color: rgb(32, 28, 24);">Uma informação por papel:</strong>&nbsp;Pode ser uma frase de entrevista, uma observação, uma foto, uma resposta de questionário, uma lacuna da matriz de similares.</p></div>
+    <div class="card" style="display:flex;gap:20px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:22px 26px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);min-width:34px">2</span><p style="margin:0;font-size:16px;color:#3E3830"><strong style="color:#201C18">Espalhar tudo,</strong> sem ordem.</p></div>
+    <div class="card" style="display:flex;gap:20px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:22px 26px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);min-width:34px">3</span><p style="margin:0;font-size:16px;color:#3E3830"><strong style="color:#201C18">Em silêncio,</strong> cada integrante aproxima os papéis que parecem dizer a mesma coisa.</p></div>
+    <div class="card" style="display:flex;gap:20px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:22px 26px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);min-width:34px">4</span><p style="margin:0;font-size:16px;color:#3E3830;text-wrap:pretty"><strong style="color: rgb(32, 28, 24);">Só depois que os grupos de papéis se formarem, </strong><span style="color: rgb(32, 28, 24);">a equipe</span>&nbsp;dá a cada conjunto um título escrito como frase completa, como <i>“o reciclável não tem lugar próprio na cozinha” </i>(não usar uma&nbsp;palavra solta, como “espaço”).</p></div>
+    <div class="card" style="display:flex;gap:20px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:22px 26px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);min-width:34px">5</span><p style="margin:0;font-size:16px;color:#3E3830"><strong style="color:#201C18">Se fizer sentido,</strong> reunir grupos em temas maiores.</p></div>
+  </div>
+  <div class="card" style="background:color-mix(in oklab,var(--accent) 7%,white);border:1px solid color-mix(in oklab,var(--accent) 22%,white);border-radius:18px;padding:30px">
+    <h3 style="margin:0 0 16px;font-family:Sora,sans-serif;font-size:19px;font-weight:700;color:var(--accent)">Erros comuns</h3>
+    <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px">
+      <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:700">✕</span><span>Começar pelas categorias e encaixar os dados nelas.</span></li>
+      <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:700">✕</span><span>Títulos de uma palavra.</span></li>
+      <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:700">✕</span><span>Descartar o papel que não se encaixa em lugar nenhum, que muitas vezes é o mais revelador.</span></li>
+    </ul>
+  </div>
+</section>
+
+
+
+<section id="publico" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">2.3 · Público-alvo</div>
+  <h2 style="margin:0 0 12px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">Para quem, segundo a pesquisa</h2>
+  <p style="margin:0 0 28px;font-size:14px;color:#756E66;font-style:italic">Síntese elaborada para a aula, sem atribuição a um autor específico.</p>
+  <p style="margin:0 0 44px;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">O público-alvo <b>é o grupo de pessoas para quem o projeto é feito</b>, descrito <i>com base no que a pesquisa mostrou</i>, <b>e não no que o grupo imaginava antes dela</b>. Phillips inclui a análise do público-alvo entre os campos do briefing; com a pesquisa, ela passa a ter sustentação.</p>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Seis campos</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:44px">
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);margin-bottom:12px">01</div><p style="margin:0;font-size:15.5px;color:#3E3830"><strong style="color:#201C18">Quem são,</strong> com características que importam para o projeto.</p></div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);margin-bottom:12px">02</div><p style="margin:0;font-size:15.5px;color:#3E3830"><strong style="color:#201C18">Onde e quando</strong> o problema aparece para eles.</p></div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);margin-bottom:12px">03</div><p style="margin:0;font-size:15.5px;color:#3E3830"><strong style="color:#201C18">O que fazem hoje</strong> para lidar com ele.</p></div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);margin-bottom:12px">04</div><p style="margin:0;font-size:15.5px;color:#3E3830"><strong style="color:#201C18">O que incomoda</strong> ou atrapalha.</p></div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);margin-bottom:12px">05</div><p style="margin:0;font-size:15.5px;color:#3E3830"><strong style="color:#201C18">O que valorizam.</strong></p></div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:24px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);margin-bottom:12px">06</div><p style="margin:0;font-size:15.5px;color:#3E3830"><strong style="color:#201C18">O que não pode ser exigido deles,</strong> como tempo, dinheiro, força ou conhecimento técnico.</p></div>
+  </div>
+  <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05);margin-bottom:20px">
+    <h3 style="margin:0 0 12px;font-family:Sora,sans-serif;font-size:19px;font-weight:700">Público principal e secundários</h3>
+    <p style="margin:0 0 20px;font-size:15.5px;color:#3E3830;max-width:780px;text-wrap:pretty">O principal é quem usa; os secundários são quem decide, compra, instala, mantém ou é afetado. No caso do lixo, o morador usa, o síndico decide, a zeladoria recolhe e a cooperativa recebe.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <span style="display:flex;align-items:center;gap:8px;font-size:14px;padding:8px 16px;border-radius:999px;background:var(--accent);color:#fff"><strong>Morador</strong><span>usa</span></span>
+      <span style="display:flex;align-items:center;gap:8px;font-size:14px;padding:8px 16px;border-radius:999px;background:color-mix(in oklab,var(--accent) 9%,white);color:var(--accent)"><strong>Síndico</strong><span>decide</span></span>
+      <span style="display:flex;align-items:center;gap:8px;font-size:14px;padding:8px 16px;border-radius:999px;background:color-mix(in oklab,var(--accent) 9%,white);color:var(--accent)"><strong>Zeladoria</strong><span>recolhe</span></span>
+      <span style="display:flex;align-items:center;gap:8px;font-size:14px;padding:8px 16px;border-radius:999px;background:color-mix(in oklab,var(--accent) 9%,white);color:var(--accent)"><strong>Cooperativa</strong><span>recebe</span></span>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
+    <div class="card" style="background:#201C18;border-radius:18px;padding:30px;color:#FAF8F5">
+      <div style="font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#B5AEA5;margin-bottom:12px">Regra</div>
+      <p style="margin:0 0 16px;font-size:16px;color:#fff;text-wrap:pretty">Cada campo traz ao menos uma evidência entre parênteses.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <span style="font-family:Sora,sans-serif;font-weight:700;font-size:14px;padding:6px 12px;border-radius:8px;background:#2C2620;color:var(--accent)">(E2)</span>
+        <span style="font-family:Sora,sans-serif;font-weight:700;font-size:14px;padding:6px 12px;border-radius:8px;background:#2C2620;color:var(--accent)">(O4)</span>
+        <span style="font-family:Sora,sans-serif;font-weight:700;font-size:14px;padding:6px 12px;border-radius:8px;background:#2C2620;color:var(--accent)">(Q: 18 de 30)</span>
+      </div>
+    </div>
+    <div class="card" style="background:color-mix(in oklab,var(--accent) 7%,white);border:1px solid color-mix(in oklab,var(--accent) 22%,white);border-radius:18px;padding:30px">
+      <h3 style="margin:0 0 16px;font-family:Sora,sans-serif;font-size:19px;font-weight:700;color:var(--accent)">Erros comuns</h3>
+      <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px">
+        <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:700">✕</span><span>Descrever o público só por idade, sexo e renda, que raramente explicam o comportamento.</span></li>
+        <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:700">✕</span><span>“Todo mundo” como público.</span></li>
+        <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:700">✕</span><span>Descrição sem nenhuma referência a dado.</span></li>
+      </ul>
+    </div>
+  </div>
+</section><section id="painel" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">2.4 · Painel semântico</div>
+  <h2 style="margin:0 0 24px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">Alinhar o grupo antes de desenhar</h2>
+  <p style="margin:0 0 44px;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">Composição de imagens que expressa o universo do público e o caráter pretendido para o projeto. Serve para alinhar o grupo antes de desenhar.</p>
+  <h3 style="margin:0 0 6px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Os três painéis de Baxter</h3>
+  <p style="margin:0 0 20px;font-size:14px;color:#756E66">Em <em>Projeto de produto</em>.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;margin-bottom:28px">
+    <div class="card" style="background:#fff;border:2px solid var(--accent);border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:40px;line-height:1;color:var(--accent)">1</span><span style="font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--accent);color:#fff">Mínimo do relatório</span></div>
+      <h4 style="margin:0 0 10px;font-family:Sora,sans-serif;font-size:19px;font-weight:700">Painel do estilo de vida</h4>
+      <p style="margin:0;font-size:15px;color:#3E3830">Imagens do cotidiano, dos valores e do ambiente do público.</p>
+    </div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+      <div style="font-family:Sora,sans-serif;font-weight:800;font-size:40px;line-height:1;color:var(--accent);margin-bottom:14px">2</div>
+      <h4 style="margin:0 0 10px;font-family:Sora,sans-serif;font-size:19px;font-weight:700">Painel da expressão do produto</h4>
+      <p style="margin:0;font-size:15px;color:#3E3830">Imagens que traduzem a emoção que o produto deve transmitir.</p>
+    </div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+      <div style="font-family:Sora,sans-serif;font-weight:800;font-size:40px;line-height:1;color:var(--accent);margin-bottom:14px">3</div>
+      <h4 style="margin:0 0 10px;font-family:Sora,sans-serif;font-size:19px;font-weight:700">Painel do tema visual</h4>
+      <p style="margin:0;font-size:15px;color:#3E3830">Produtos e peças de qualquer área cujo estilo corresponde a essa expressão.</p>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-bottom:24px">
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+      <h3 style="margin:0 0 16px;font-family:Sora,sans-serif;font-size:19px;font-weight:700">Para o relatório, o mínimo é o painel do estilo de vida</h3>
+      <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+        <li style="display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid #F0EBE4;font-size:15px;color:#3E3830"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:20px;color:var(--accent);min-width:64px">12–20</span><span>imagens (de preferência fotos da própria pesquisa);</span></li>
+        <li style="display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid #F0EBE4;font-size:15px;color:#3E3830"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:20px;color:var(--accent);min-width:64px">→</span><span>organizadas <b>com critério</b>, e não ao acaso;</span></li>
+        <li style="display:flex;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px solid #F0EBE4;font-size:15px;color:#3E3830"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:20px;color:var(--accent);min-width:64px">3–5</span><span>palavras-chave que resumem o painel;</span></li>
+        <li style="display:flex;gap:14px;align-items:baseline;padding:11px 0;font-size:15px;color:#3E3830"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:20px;color:var(--accent);min-width:64px">©</span><span>crédito de todas as imagens.</span></li>
+      </ul>
+    </div>
+    <div class="card" style="background:color-mix(in oklab,var(--accent) 7%,white);border:1px solid color-mix(in oklab,var(--accent) 22%,white);border-radius:18px;padding:30px">
+      <h3 style="margin:0 0 16px;font-family:Sora,sans-serif;font-size:19px;font-weight:700;color:var(--accent)">Erros comuns</h3>
+      <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px">
+        <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:700">✕</span><span>Imagens bonitas da internet sem relação com a pesquisa.</span></li>
+        <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:700">✕</span><span>Imagens do produto que o grupo já imagina, o que antecipa a solução.</span></li>
+        <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:700">✕</span><span>Ausência de crédito.</span></li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin:0;font-size:14.5px;color:#756E66;padding-top:20px;border-top:1px solid #E7E1D9;max-width:780px">No exercício de hoje, sem fotos, o painel será esboçado apenas em palavras.</p>
+</section>
+
+<section id="diretrizes" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">2.5 · Das evidências às diretrizes</div>
+  <h2 style="margin:0 0 24px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">O que a solução precisa fazer, sem dizer como</h2>
+  <p style="margin:0 0 44px;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">Uma diretriz é <b>uma orientação para o projeto</b>, derivada da pesquisa, que <b>diz o que a solução precisa fazer ou respeitar</b>, sem dizer como.</p>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Fórmula em três partes</h3>
+  <div style="display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin-bottom:20px">
+    <div style="flex:1 1 220px;background:#F0EBE4;border-radius:16px;padding:24px"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:13px;color:#4A443E;margin-bottom:6px">1</div><div style="font-family:Sora,sans-serif;font-weight:800;font-size:20px;color:#201C18;line-height:1.25">O que observamos</div></div>
+    <div style="display:flex;align-items:center;font-family:Sora,sans-serif;font-weight:800;font-size:24px;color:#B5AEA5">→</div>
+    <div style="flex:1 1 220px;background:color-mix(in oklab,var(--accent) 14%,white);border-radius:16px;padding:24px"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:13px;color:var(--accent);margin-bottom:6px">2</div><div style="font-family:Sora,sans-serif;font-weight:800;font-size:20px;color:#201C18;line-height:1.25">O que isso significa</div></div>
+    <div style="display:flex;align-items:center;font-family:Sora,sans-serif;font-weight:800;font-size:24px;color:#B5AEA5">→</div>
+    <div style="flex:1 1 220px;background:var(--accent);border-radius:16px;padding:24px"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:13px;color:#fff;margin-bottom:6px">3</div><div style="font-family:Sora,sans-serif;font-weight:800;font-size:20px;color:#fff;line-height:1.25">Portanto, o projeto deve</div></div>
+  </div>
+  <blockquote class="card" style="margin:0 0 44px;background:#fff;border:1px solid #E7E1D9;border-radius:20px;padding:34px 36px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+    <div style="font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#756E66;margin-bottom:14px">Exemplo</div>
+    <p style="margin:0;font-size:clamp(1.05rem,2vw,1.25rem);line-height:1.8;color:#201C18;text-wrap:pretty"><span style="background:#F0EBE4;border-radius:6px;padding:2px 6px;-webkit-box-decoration-break:clone;box-decoration-break:clone">Observamos que seis dos oito moradores entrevistados guardam o reciclável em sacolas improvisadas (E1, E3, E4, E5, E7, E8; F1, F2).</span> <span style="background:color-mix(in oklab,var(--accent) 14%,white);border-radius:6px;padding:2px 6px;-webkit-box-decoration-break:clone;box-decoration-break:clone">Isso significa que o reciclável não tem lugar próprio na cozinha.</span> <span style="background:var(--accent);color:#fff;border-radius:6px;padding:2px 6px;-webkit-box-decoration-break:clone;box-decoration-break:clone;font-weight:600">Portanto, o projeto deve oferecer um lugar fixo para o reciclável no espaço que os moradores já usam para isso.</span></p>
+  </blockquote>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Diretriz, requisito e restrição</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:28px">
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:28px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><h4 style="margin:0 0 10px;font-family:Sora,sans-serif;font-size:19px;font-weight:700;color:var(--accent)">Diretriz</h4><p style="margin:0;font-size:15.5px;color:#3E3830">Orienta.</p></div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:28px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><h4 style="margin:0 0 10px;font-family:Sora,sans-serif;font-size:19px;font-weight:700;color:var(--accent)">Requisito</h4><p style="margin:0;font-size:15.5px;color:#3E3830">Torna verificável, como “profundidade máxima de 15 cm”.</p></div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:28px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><h4 style="margin:0 0 10px;font-family:Sora,sans-serif;font-size:19px;font-weight:700;color:var(--accent)">Restrição</h4><p style="margin:0;font-size:15.5px;color:#3E3830">É um <b>limite externo</b>, que normalmente o grupo não escolhe.</p></div>
+  </div>
+  <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05);margin-bottom:28px">
+    <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:19px;font-weight:700">Uma boa diretriz</h3>
+    <ul style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:800">✓</span><span>Aponta para uma evidência.</span></li>
+      <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:800">✓</span><span>Não descreve a solução.</span></li>
+      <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:800">✓</span><span>Permite verificar no fim se foi atendida.</span></li>
+      <li style="display:flex;gap:12px;font-size:15.5px;color:#3E3830"><span style="color:var(--accent);font-weight:800">✓</span><span>Ajuda a descartar alternativas.</span></li>
+    </ul>
+  </div>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Antes e depois</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-bottom:28px">
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+      <span style="display:inline-block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:999px;background:#F0EBE4;color:#4A443E;margin-bottom:16px">✕ Evite</span>
+      <p style="margin:0;font-size:17px;color:#756E66">“A lixeira deve ser moderna e sustentável.”</p>
+    </div>
+    <div class="card" style="background:#fff;border:2px solid var(--accent);border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+      <span style="display:inline-block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:999px;background:var(--accent);color:#fff;margin-bottom:16px">✓ Prefira</span>
+      <p style="margin:0;font-size:17px;color:#201C18;font-weight:600;text-wrap:pretty">“O projeto deve permitir separar o reciclável sem sair da cozinha, porque cinco dos oito entrevistados disseram deixar de separar quando o local fica longe (E2, E4, E5, E6, E8).”</p>
+    </div>
+  </div>
+  <p style="margin:0;font-size:15px;color:#3E3830;padding-top:20px;border-top:1px solid #E7E1D9;max-width:800px;text-wrap:pretty"><strong>Nota.</strong> As lacunas da matriz de similares, ou seja, os critérios que nenhum similar atende bem, costumam virar diretrizes diretamente.</p>
+</section>
+
+<section id="relatorio" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">2.6 · O que entregar em 21/10</div>
+  <h2 style="margin:0 0 44px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">O relatório da Avaliação 3</h2>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Estrutura mínima, em dez partes</h3>
+  <ol style="margin:0 0 40px;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px">
+    <li class="card" style="display:flex;gap:16px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 22px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;line-height:1;color:var(--accent);min-width:32px">01</span><span style="font-size:15px;color:#3E3830">Problema e perguntas de pesquisa, retomados do briefing.</span></li>
+    <li class="card" style="display:flex;gap:16px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 22px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;line-height:1;color:var(--accent);min-width:32px">02</span><span style="font-size:15px;color:#3E3830">Técnicas aplicadas: quais, com quem, quando, quantas pessoas, e por que cada uma. Pelo menos três.</span></li>
+    <li class="card" style="display:flex;gap:16px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 22px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;line-height:1;color:var(--accent);min-width:32px">03</span><span style="font-size:15px;color:#3E3830">Resultados de cada técnica, resumidos.</span></li>
+    <li class="card" style="display:flex;gap:16px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 22px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;line-height:1;color:var(--accent);min-width:32px">04</span><span style="font-size:15px;color:#3E3830">Matriz de similares completa, com a conclusão de cada linha e os critérios que nenhum similar atende.</span></li>
+    <li class="card" style="display:flex;gap:16px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 22px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;line-height:1;color:var(--accent);min-width:32px">05</span><span style="font-size:15px;color:#3E3830">Foto do agrupamento por afinidade, com os títulos-frase dos grupos.</span></li>
+    <li class="card" style="display:flex;gap:16px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 22px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;line-height:1;color:var(--accent);min-width:32px">06</span><span style="font-size:15px;color:#3E3830">Descrição do público-alvo nos seis campos, com evidências.</span></li>
+    <li class="card" style="display:flex;gap:16px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 22px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;line-height:1;color:var(--accent);min-width:32px">07</span><span style="font-size:15px;color:#3E3830">Painel do estilo de vida, com as palavras-resumo e o crédito das imagens.</span></li>
+    <li class="card" style="display:flex;gap:16px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 22px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;line-height:1;color:var(--accent);min-width:32px">08</span><span style="font-size:15px;color:#3E3830">De cinco a oito diretrizes, cada uma na fórmula de três partes e apontando para os dados.</span></li>
+    <li class="card" style="display:flex;gap:16px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 22px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;line-height:1;color:var(--accent);min-width:32px">09</span><span style="font-size:15px;color:#3E3830">Anexos: roteiros, questionários, termos de consentimento, anotações de campo.</span></li>
+    <li class="card" style="display:flex;gap:16px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:14px;padding:18px 22px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:24px;line-height:1;color:var(--accent);min-width:32px">10</span><span style="font-size:15px;color:#3E3830">Referências e créditos, conforme a ABNT.</span></li>
+  </ol>
+  <h3 style="margin:0 0 16px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Critérios de avaliação do plano</h3>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px">
+    <span style="font-size:14px;padding:8px 16px;border-radius:999px;background:color-mix(in oklab,var(--accent) 9%,white);color:var(--accent);font-weight:600">adequação da técnica ao objetivo</span>
+    <span style="font-size:14px;padding:8px 16px;border-radius:999px;background:color-mix(in oklab,var(--accent) 9%,white);color:var(--accent);font-weight:600">qualidade do registro de campo</span>
+    <span style="font-size:14px;padding:8px 16px;border-radius:999px;background:color-mix(in oklab,var(--accent) 9%,white);color:var(--accent);font-weight:600">profundidade da análise de similares</span>
+    <span style="font-size:14px;padding:8px 16px;border-radius:999px;background:color-mix(in oklab,var(--accent) 9%,white);color:var(--accent);font-weight:600">rastreabilidade entre cada diretriz e o dado que a originou</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
+    <div class="card" style="background:#201C18;border-radius:20px;padding:34px;color:#FAF8F5">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><span style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center">!</span><span style="font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#B5AEA5">Alerta</span></div>
+      <p style="margin: 0; font-family: Sora,sans-serif; font-weight: 700; font-size: clamp(1.15rem,2.4vw,1.45rem); line-height: 1.35; color: #D9481C; text-wrap: balance">O erro mais comum é a diretriz que não aponta para nenhum dado do relatório.</p>
+    </div>
+    <div class="card" style="background:color-mix(in oklab,var(--accent) 7%,white);border:1px solid color-mix(in oklab,var(--accent) 22%,white);border-radius:20px;padding:34px">
+      <div style="font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px">Aviso</div>
+      <p style="margin:0;font-size:16px;color:#3E3830;text-wrap:pretty">Em 21/10, a aula começa com um momento reservado para dúvidas de síntese e de relatório, antes da entrega.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pratica-1" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">03 · Prática 1</div>
+  <h2 style="margin:0 0 20px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">Síntese guiada com dados fictícios</h2>
+  <p style="margin:0;font-size:17px;color:#756E66;max-width:760px">Atividade em sala com o material fictício.</p>
+</section>
+
+<section id="metade-2" data-reveal="" style="background:#201C18;color:#FAF8F5;scroll-margin-top:60px">
+  <div style="max-width:1120px;margin:0 auto;padding:110px 28px">
+    <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:18px">Segunda metade</div>
+    <h2 style="margin:0;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;letter-spacing:-0.035em;color:#fff;max-width:14ch;text-wrap:balance">Abrir para gerar</h2>
+  </div>
+</section>
+
+<section id="divergir" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">4.1 · Divergir e convergir</div>
+  <h2 style="margin:0 0 24px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">Abrir possibilidades, depois escolher</h2>
+  <p style="margin:0 0 40px;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">Todo processo de projeto alterna momentos de abrir possibilidades e de escolher entre elas. O duplo diamante, modelo divulgado pelo Design Council do Reino Unido, representa isso com dois losangos: o primeiro abre e fecha o problema; o segundo abre e fecha a solução.</p>
+  <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:20px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05);margin-bottom:28px">
+    <svg viewBox="0 0 800 300" style="width:100%;height:auto;display:block" role="img" aria-label="Duplo diamante: primeiro losango Problema, segundo losango Solução, marcador Vocês estão aqui entre os dois">
+      <polygon points="30,170 205,50 380,170 205,290" style="fill:#F0EBE4;stroke:#201C18;stroke-width:2"></polygon>
+      <polygon points="420,170 595,50 770,170 595,290" style="fill:color-mix(in oklab,var(--accent) 14%,white);stroke:var(--accent);stroke-width:2"></polygon>
+      <text x="205" y="178" text-anchor="middle" style="font-family:Sora,sans-serif;font-weight:800;font-size:26px;fill:#201C18">Problema</text>
+      <text x="595" y="178" text-anchor="middle" style="font-family:Sora,sans-serif;font-weight:800;font-size:26px;fill:var(--accent)">Solução</text>
+      <line x1="400" y1="62" x2="400" y2="156" style="stroke:var(--accent);stroke-width:2;stroke-dasharray:5 5"></line>
+      <circle cx="400" cy="170" r="12" style="fill:var(--accent)"></circle>
+      <circle cx="400" cy="170" r="22" style="fill:none;stroke:var(--accent);stroke-width:2;opacity:.4"></circle>
+      <rect x="310" y="16" width="180" height="40" rx="20" style="fill:var(--accent)"></rect>
+      <text x="400" y="42" text-anchor="middle" style="font-family:Sora,sans-serif;font-weight:700;font-size:16px;fill:#fff">Vocês estão aqui</text>
+    </svg>
+  </div>
+  <p style="margin:0 0 28px;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">No exercício de hoje, o primeiro diamante acabou de fechar com as diretrizes do caso fictício. Agora abre o segundo. No projeto real de cada grupo, esse mesmo movimento acontece na semana que vem.</p>
+  <div class="card" style="background:#201C18;border-radius:20px;padding:36px;color:#FAF8F5">
+    <div style="font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px">Regra de ouro</div>
+    <p style="margin:0;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.4rem,3vw,2.1rem);line-height:1.25;letter-spacing:-0.015em;color:#fff;text-wrap:balance">Não divergir e convergir ao mesmo tempo.</p>
+  </div>
+</section>
+
+<section id="adiamento" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">4.2 · Adiamento do julgamento e quantidade</div>
+  <h2 style="margin:0 0 24px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">Primeiro gerar, depois julgar</h2>
+  <p style="margin:0 0 44px;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">Alex Osborn, publicitário norte-americano que criou o <b>brainstorming</b>, propôs que a geração de ideias funciona melhor quando o julgamento é adiado e que a quantidade tende a gerar qualidade. Kelley e Littman, em <em>A arte da inovação</em>, apresentam as regras de brainstorming da IDEO, que retomam essa lógica e acrescentam outras, como manter o foco numa pergunta clara e construir sobre a ideia dos outros.</p>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Quatro regras para as rodadas</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px">
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:64px;line-height:1;color:var(--accent);margin-bottom:16px;letter-spacing:-0.04em">1</div><p style="margin:0;font-family:Sora,sans-serif;font-weight:700;font-size:18px;line-height:1.35;color:#201C18">Nenhuma crítica durante a geração.</p></div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:64px;line-height:1;color:var(--accent);margin-bottom:16px;letter-spacing:-0.04em">2</div><p style="margin:0;font-family:Sora,sans-serif;font-weight:700;font-size:18px;line-height:1.35;color:#201C18">Quantidade antes de qualidade.</p></div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:64px;line-height:1;color:var(--accent);margin-bottom:16px;letter-spacing:-0.04em">3</div><p style="margin:0;font-family:Sora,sans-serif;font-weight:700;font-size:18px;line-height:1.35;color:#201C18">Ideias estranhas são bem-vindas.</p></div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)"><div style="font-family:Sora,sans-serif;font-weight:800;font-size:64px;line-height:1;color:var(--accent);margin-bottom:16px;letter-spacing:-0.04em">4</div><p style="margin:0;font-family:Sora,sans-serif;font-weight:700;font-size:18px;line-height:1.35;color:#201C18">Uma ideia por papel ou por esboço.</p></div>
+  </div>
+</section>
+
+<section id="bloqueios" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">4.3 · Bloqueios criativos</div>
+  <h2 style="margin:0 0 12px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">Cinco bloqueios e suas saídas</h2>
+  <p style="margin:0 0 36px;font-size:14px;color:#756E66;font-style:italic">Síntese elaborada para a aula, sem atribuição a um autor específico.</p>
+  <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;box-shadow:0 1px 3px rgba(32,28,24,.05);overflow:hidden;margin-bottom:28px">
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:#F7F4EF;border-bottom:2px solid #201C18">
+      <div style="padding:12px 24px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#756E66">Bloqueio</div>
+      <div style="padding:12px 24px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)">Saída</div>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #F0EBE4"><div style="padding:18px 24px;font-size:15.5px;color:#201C18;font-weight:600">Medo de errar ou de parecer ridículo</div><div style="padding:18px 24px;font-size:15.5px;color:#3E3830;background:color-mix(in oklab,var(--accent) 4%,white)">Geração individual e anônima antes de compartilhar.</div></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #F0EBE4"><div style="padding:18px 24px;font-size:15.5px;color:#201C18;font-weight:600">Apego à primeira ideia</div><div style="padding:18px 24px;font-size:15.5px;color:#3E3830;background:color-mix(in oklab,var(--accent) 4%,white)">Número mínimo de alternativas antes de escolher.</div></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #F0EBE4"><div style="padding:18px 24px;font-size:15.5px;color:#201C18;font-weight:600">Ver o problema de um jeito só</div><div style="padding:18px 24px;font-size:15.5px;color:#3E3830;background:color-mix(in oklab,var(--accent) 4%,white)">Reformular a pergunta de três formas diferentes.</div></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid #F0EBE4"><div style="padding:18px 24px;font-size:15.5px;color:#201C18;font-weight:600">Repertório curto</div><div style="padding:18px 24px;font-size:15.5px;color:#3E3830;background:color-mix(in oklab,var(--accent) 4%,white)">Voltar ao painel semântico e aos similares análogos.</div></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)"><div style="padding:18px 24px;font-size:15.5px;color:#201C18;font-weight:600">Julgar cedo demais</div><div style="padding:18px 24px;font-size:15.5px;color:#3E3830;background:color-mix(in oklab,var(--accent) 4%,white)">Separar em tempo e espaço o momento de gerar e o de avaliar.</div></div>
+  </div>
+  <div class="card" style="background:#201C18;border-radius:20px;padding:34px;color:#FAF8F5">
+    <h3 style="margin:0 0 14px;font-family:Sora,sans-serif;font-size:20px;font-weight:700;color:#fff">A restrição como estímulo</h3>
+    <p style="margin:0;font-size:16px;color:#E7E1D9;max-width:820px;text-wrap:pretty">Gerar ideias “para qualquer coisa” paralisa; gerar ideias para <strong style="color: var(--accent);">“um lugar fixo para o reciclável que não dispute a pia”</strong> fornece um norte por onde começar. As diretrizes que os grupos acabaram de escrever são o ponto de apoio das rodadas.</p>
+  </div>
+</section>
+
+<section id="tecnicas" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">4.4 · Três técnicas para as rodadas</div>
+  <h2 style="margin:0 0 24px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">Como podemos…?</h2>
+  <p style="margin:0 0 44px;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">A pergunta de partida é sempre uma diretriz reescrita como <strong style="color:var(--accent)">“Como podemos...?”</strong>.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:24px">
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+      <div style="display:grid;grid-template-columns:repeat(4,30px);grid-template-rows:repeat(2,30px);gap:4px;margin-bottom:20px" aria-hidden="true">
+        <span style="border:2px solid var(--accent);border-radius:4px"></span><span style="border:2px solid var(--accent);border-radius:4px"></span><span style="border:2px solid var(--accent);border-radius:4px"></span><span style="border:2px solid var(--accent);border-radius:4px"></span>
+        <span style="border:2px solid var(--accent);border-radius:4px"></span><span style="border:2px solid var(--accent);border-radius:4px"></span><span style="border:2px solid var(--accent);border-radius:4px"></span><span style="border:2px solid var(--accent);border-radius:4px;background:var(--accent)"></span>
+      </div>
+      <h3 style="margin:0 0 10px;font-family:Sora,sans-serif;font-size:21px;font-weight:700">Oito em oito</h3>
+      <p style="margin:0;font-size:15.5px;color:#3E3830;text-wrap:pretty">Folha dobrada em oito quadros, um esboço por quadro, sem apagar.</p>
+    </div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+      <div style="font-family:Sora,sans-serif;font-weight:800;font-size:44px;line-height:1;color:var(--accent);margin-bottom:20px;letter-spacing:-0.03em">6-3-5</div>
+      <h3 style="margin:0 0 10px;font-family:Sora,sans-serif;font-size:21px;font-weight:700">Brainwriting 6-3-5</h3>
+      <p style="margin:0;font-size:15.5px;color:#3E3830;text-wrap:pretty">Método proposto por Bernd Rohrbach: <b>seis pessoas</b> escrevem <b>três ideias</b> cada e passam a folha adiante, desenvolvendo as ideias do colega. Nesse caso, adaptado ao tamanho do grupo.</p>
+    </div>
+    <div class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:18px;padding:30px;box-shadow:0 1px 3px rgba(32,28,24,.05)">
+      <h3 style="margin:0 0 10px;font-family:Sora,sans-serif;font-size:21px;font-weight:700">SCAMPER</h3>
+      <p style="margin:0 0 18px;font-size:15.5px;color:#3E3830;text-wrap:pretty">Perguntas para transformar algo que já existe. A lista foi organizada por Bob Eberle a partir das perguntas de verificação de Osborn.</p>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:34px;height:34px;border-radius:8px;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0">S</span><span style="font-size:15px;color:#201C18">substituir</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:34px;height:34px;border-radius:8px;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0">C</span><span style="font-size:15px;color:#201C18">combinar</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:34px;height:34px;border-radius:8px;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0">A</span><span style="font-size:15px;color:#201C18">adaptar</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:34px;height:34px;border-radius:8px;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0">M</span><span style="font-size:15px;color:#201C18">modificar</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:34px;height:34px;border-radius:8px;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0">P</span><span style="font-size:15px;color:#201C18">propor outro uso</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:34px;height:34px;border-radius:8px;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0">E</span><span style="font-size:15px;color:#201C18">eliminar</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:34px;height:34px;border-radius:8px;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0">R</span><span style="font-size:15px;color:#201C18">reorganizar</span></div>
+      </div>
+    </div>
+  </div>
+  <p style="margin:0;font-size:14.5px;color:#756E66;padding-top:20px;border-top:1px solid #E7E1D9">Brainstorming em voz alta fica como técnica livre para a semana.</p>
+</section>
+
+<section id="pratica-2" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">05 · Prática 2</div>
+  <h2 style="margin:0 0 44px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">Rodadas criativas</h2>
+  <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px">
+    <div class="card" style="display:flex;gap:20px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:22px 26px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);min-width:34px">1</span><p style="margin:0;font-size:16px;color:#3E3830">Cada grupo escolhe duas das próprias diretrizes do exercício e as reescreve como “Como podemos...?”.</p></div>
+    <div class="card" style="display:flex;gap:20px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:22px 26px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);min-width:34px">2</span><p style="margin:0;font-size:16px;color:#3E3830"><strong style="color:#201C18">Rodada 1, individual:</strong> oito em oito sobre a primeira diretriz.</p></div>
+    <div class="card" style="display:flex;gap:20px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:22px 26px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);min-width:34px">3</span><p style="margin:0;font-size:16px;color:#3E3830"><strong style="color:#201C18">Rodada 2, no grupo:</strong> brainwriting sobre a mesma diretriz.</p></div>
+    <div class="card" style="display:flex;gap:20px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:22px 26px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);min-width:34px">4</span><p style="margin:0;font-size:16px;color:#3E3830"><strong style="color:#201C18">Rodada 3:</strong> SCAMPER aplicado a um dos similares do caso, sobre a segunda diretriz.</p></div>
+    <div class="card" style="display:flex;gap:20px;align-items:baseline;background:#fff;border:1px solid #E7E1D9;border-radius:16px;padding:22px 26px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:34px;line-height:1;color:var(--accent);min-width:34px">5</span><p style="margin:0;font-size:16px;color:#3E3830"><strong style="color:#201C18">Contagem e mural:</strong> cada grupo soma quantas alternativas gerou e cola tudo num mural coletivo, sem nome e sem eliminar nenhuma.</p></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
+    <div class="card" style="background:color-mix(in oklab,var(--accent) 7%,white);border:1px solid color-mix(in oklab,var(--accent) 22%,white);border-radius:20px;padding:34px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span style="font-family:Sora,sans-serif;font-weight:800;font-size:clamp(4rem,9vw,6rem);line-height:1;color:var(--accent);letter-spacing:-0.04em">25</span>
+      <div><div style="font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px">Meta</div><p style="margin:0;font-family:Sora,sans-serif;font-weight:700;font-size:18px;color:#201C18;line-height:1.35">Pelo menos 25 alternativas por grupo.</p></div>
+    </div>
+    <div class="card" style="background:#201C18;border-radius:20px;padding:34px;color:#FAF8F5">
+      <div style="font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#B5AEA5;margin-bottom:12px">Para discutir</div>
+      <p style="margin:0 0 10px;font-size:16.5px;color:#fff;font-weight:600">Quantos chegaram a ideias parecidas a partir dos mesmos dados?</p>
+      <p style="margin:0;font-size:16.5px;color:#fff;font-weight:600">Quais ideias só apareceram em um ou poucas soluções?</p>
+    </div>
+  </div>
+</section>
+
+<section id="fichas" data-reveal="" style="max-width: 1120px; margin: 0 auto; padding: 92px 28px; scroll-margin-top: 86px; border-top: 1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">06 · Fichas para a semana</div>
+  <h2 style="margin:0 0 16px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:820px;text-wrap:balance">Três fichas para os próprios dados</h2>
+  <p style="margin:0 0 24px;font-size:17px;color:#756E66;max-width:760px;text-wrap:pretty">Modelos elaborados para esta aula. Preencha na tela, salve em PDF ou copie o texto.</p>
+  <div class="no-print" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:44px">
+    <a href="#ficha-1" style="font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #E7E1D9;color:#3E3830;text-decoration:none">Ficha 1 · Público-alvo</a>
+    <a href="#ficha-2" style="font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #E7E1D9;color:#3E3830;text-decoration:none">Ficha 2 · Diretrizes</a>
+    <a href="#ficha-3" style="font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #E7E1D9;color:#3E3830;text-decoration:none">Ficha 3 · Checklist do relatório</a>
+  </div>
+
+  <article id="ficha-1" class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:20px;padding:34px;box-shadow:0 1px 3px rgba(32,28,24,.05);margin-bottom:24px;scroll-margin-top:86px">
+    <div style="font-family:Sora,sans-serif;font-weight:800;font-size:13px;color:var(--accent);margin-bottom:8px">Ficha 1</div>
+    <h3 style="margin:0 0 24px;font-family:Sora,sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.02em">Público-alvo</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #F0EBE4">
+      <label style="display:block"><span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:13px;margin-bottom:6px">Nome do grupo</span><textarea rows="1" data-k="f1_grupo" value="{{ v.f1_grupo }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:15px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+      <label style="display:block"><span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:13px;margin-bottom:6px">Integrantes</span><textarea rows="1" data-k="f1_integrantes" value="{{ v.f1_integrantes }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:15px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+      <label style="display:block"><span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:13px;margin-bottom:6px">Tema</span><textarea rows="1" data-k="f1_tema" value="{{ v.f1_tema }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:15px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:22px;margin-bottom:34px">
+      <sc-for list="{{ f1campos }}" as="c" hint-placeholder-count="6">
+        <div>
+          <span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:16px">{{ c.n }}. {{ c.titulo }}</span><span style="display:block;font-size:13.5px;color:#756E66;margin-bottom:8px">{{ c.instr }}</span>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:start">
+            <textarea rows="2" data-k="{{ c.k }}" value="{{ c.v }}" onChange="{{ on }}" aria-label="{{ c.titulo }}" style="flex:1 1 340px;min-width:0;box-sizing:border-box;padding:12px 14px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:15px;line-height:1.55;color:#201C18;resize:none;overflow:hidden;display:block"></textarea>
+            <label style="flex:0 1 200px;min-width:150px;display:block"><span style="display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Evidência</span><textarea rows="1" data-k="{{ c.ek }}" value="{{ c.ev }}" onChange="{{ on }}" placeholder="E2, O4…" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid color-mix(in oklab,var(--accent) 30%,white);border-radius:10px;background:color-mix(in oklab,var(--accent) 4%,white);font-size:14px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:16px">Públicos secundários</span><span style="display:block;font-size:13.5px;color:#756E66;margin-bottom:12px">Quem decide, compra, instala, mantém ou é afetado: o papel e a descrição.</span>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <sc-for list="{{ f1sec }}" as="s" hint-placeholder-count="4">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:start">
+          <span style="font-family:Sora,sans-serif;font-weight:800;font-size:15px;color:var(--accent);min-width:22px;padding-top:11px">{{ s.n }}</span>
+          <label style="flex:0 1 220px;min-width:150px;display:block"><span style="display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#756E66;margin-bottom:4px">Papel</span><textarea rows="1" data-k="{{ s.pk }}" value="{{ s.pv }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:14.5px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+          <label style="flex:1 1 300px;min-width:0;display:block"><span style="display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#756E66;margin-bottom:4px">Descrição</span><textarea rows="1" data-k="{{ s.dk }}" value="{{ s.dv }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:14.5px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+        </div>
+      </sc-for>
+    </div>
+    <div class="no-print" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;padding-top:24px;border-top:1px solid #F0EBE4">
+      <button onClick="{{ imprimir }}" data-ficha-id="1" style="padding:13px 24px;border:none;border-radius:10px;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:700;font-size:15px;cursor:pointer" style-hover="filter:brightness(1.08)">Salvar em PDF</button>
+      <button onClick="{{ copiar }}" data-ficha-id="1" style="padding:13px 24px;border:1px solid #201C18;border-radius:10px;background:#fff;color:#201C18;font-family:Sora,sans-serif;font-weight:700;font-size:15px;cursor:pointer" style-hover="background:#F0EBE4">Copiar texto</button>
+    </div>
+  </article>
+
+  <article id="ficha-2" class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:20px;padding:34px;box-shadow:0 1px 3px rgba(32,28,24,.05);margin-bottom:24px;scroll-margin-top:86px">
+    <div style="font-family:Sora,sans-serif;font-weight:800;font-size:13px;color:var(--accent);margin-bottom:8px">Ficha 2</div>
+    <h3 style="margin:0 0 24px;font-family:Sora,sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.02em">Diretrizes</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #F0EBE4">
+      <label style="display:block"><span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:13px;margin-bottom:6px">Nome do grupo</span><textarea rows="1" data-k="f2_grupo" value="{{ v.f2_grupo }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:15px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+      <label style="display:block"><span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:13px;margin-bottom:6px">Integrantes</span><textarea rows="1" data-k="f2_integrantes" value="{{ v.f2_integrantes }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:15px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+      <label style="display:block"><span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:13px;margin-bottom:6px">Tema</span><textarea rows="1" data-k="f2_tema" value="{{ v.f2_tema }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:15px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+    </div>
+    <p style="margin:0 0 22px;font-size:13.5px;color:#756E66">Oito diretrizes, cada uma na fórmula de três partes, com os dados de origem. Marque ao lado as verificações que ela cumpre.</p>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <sc-for list="{{ f2blocos }}" as="b" hint-placeholder-count="8">
+        <div class="card" style="display:flex;flex-wrap:wrap;gap:18px;align-items:start;border:1px solid #E7E1D9;border-radius:16px;padding:22px;background:#FCFBF9">
+          <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:Sora,sans-serif;font-weight:800;font-size:15px;color:var(--accent)">Diretriz {{ b.n }}</div>
+            <label style="display:block"><span style="display:block;font-size:12px;font-weight:700;color:#4A443E;margin-bottom:4px">Observamos que</span><textarea rows="2" data-k="{{ b.ok }}" value="{{ b.ov }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:11px 13px;border:1px solid #E7E1D9;border-radius:10px;background:#F0EBE4;font-size:15px;line-height:1.5;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+            <label style="display:block"><span style="display:block;font-size:12px;font-weight:700;color:var(--accent);margin-bottom:4px">Isso significa que</span><textarea rows="2" data-k="{{ b.sk }}" value="{{ b.sv }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:11px 13px;border:1px solid color-mix(in oklab,var(--accent) 22%,white);border-radius:10px;background:color-mix(in oklab,var(--accent) 8%,white);font-size:15px;line-height:1.5;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+            <label style="display:block"><span style="display:block;font-size:12px;font-weight:700;color:var(--accent);margin-bottom:4px">Portanto, o projeto deve</span><textarea rows="2" data-k="{{ b.pk }}" value="{{ b.pv }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:11px 13px;border:2px solid var(--accent);border-radius:10px;background:#fff;font-size:15px;line-height:1.5;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+            <label style="display:block;max-width:360px"><span style="display:block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#756E66;margin-bottom:4px">Dados de origem</span><textarea rows="1" data-k="{{ b.dk }}" value="{{ b.dv }}" onChange="{{ on }}" placeholder="E1, E3, F2…" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #E7E1D9;border-radius:10px;background:#fff;font-size:14px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+          </div>
+          <div style="flex:0 1 240px;min-width:220px;display:flex;flex-direction:column;gap:10px;padding:14px 16px;background:#fff;border:1px solid #E7E1D9;border-radius:12px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#756E66">Verificação</div>
+            <sc-for list="{{ b.checks }}" as="c" hint-placeholder-count="4">
+              <label style="display:flex;align-items:flex-start;gap:9px;font-size:13.5px;color:#3E3830;cursor:pointer"><input type="checkbox" data-k="{{ c.k }}" checked="{{ c.v }}" onChange="{{ on }}" style="margin-top:2px"><span style="flex:1;min-width:0;line-height:1.35">{{ c.label }}</span></label>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div class="no-print" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;padding-top:24px;border-top:1px solid #F0EBE4">
+      <button onClick="{{ imprimir }}" data-ficha-id="2" style="padding:13px 24px;border:none;border-radius:10px;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:700;font-size:15px;cursor:pointer" style-hover="filter:brightness(1.08)">Salvar em PDF</button>
+      <button onClick="{{ copiar }}" data-ficha-id="2" style="padding:13px 24px;border:1px solid #201C18;border-radius:10px;background:#fff;color:#201C18;font-family:Sora,sans-serif;font-weight:700;font-size:15px;cursor:pointer" style-hover="background:#F0EBE4">Copiar texto</button>
+    </div>
+  </article>
+
+  <article id="ficha-3" class="card" style="background:#fff;border:1px solid #E7E1D9;border-radius:20px;padding:34px;box-shadow:0 1px 3px rgba(32,28,24,.05);scroll-margin-top:86px">
+    <div style="font-family:Sora,sans-serif;font-weight:800;font-size:13px;color:var(--accent);margin-bottom:8px">Ficha 3</div>
+    <h3 style="margin:0 0 24px;font-family:Sora,sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.02em">Checklist do relatório da Avaliação 3</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #F0EBE4">
+      <label style="display:block"><span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:13px;margin-bottom:6px">Nome do grupo</span><textarea rows="1" data-k="f3_grupo" value="{{ v.f3_grupo }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:15px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+      <label style="display:block"><span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:13px;margin-bottom:6px">Integrantes</span><textarea rows="1" data-k="f3_integrantes" value="{{ v.f3_integrantes }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:15px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+      <label style="display:block"><span style="display:block;font-family:Sora,sans-serif;font-weight:700;font-size:13px;margin-bottom:6px">Tema</span><textarea rows="1" data-k="f3_tema" value="{{ v.f3_tema }}" onChange="{{ on }}" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #E7E1D9;border-radius:10px;background:#FCFBF9;font-size:15px;line-height:1.45;color:#201C18;resize:none;overflow:hidden;display:block"></textarea></label>
+    </div>
+    <div style="margin-bottom:22px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px">
+        <span style="font-size:13.5px;color:#756E66">Marque cada parte quando estiver pronta.</span>
+        <span style="font-family:Sora,sans-serif;font-weight:800;font-size:22px;color:var(--accent)">{{ f3progTxt }}</span>
+      </div>
+      <div role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="{{ f3n }}" style="height:12px;background:#F0EBE4;border-radius:999px;overflow:hidden"><div style="height:100%;background:var(--accent);border-radius:999px;transition:width .35s ease;width:{{ f3pct }}"></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ f3itens }}" as="it" hint-placeholder-count="10">
+        <label style="display:flex;gap:14px;align-items:baseline;padding:13px 4px;border-bottom:1px solid #F0EBE4;cursor:pointer"><input type="checkbox" data-k="{{ it.k }}" checked="{{ it.v }}" onChange="{{ on }}" style="position:relative;top:3px"><span style="font-family:Sora,sans-serif;font-weight:800;font-size:15px;color:var(--accent);min-width:24px">{{ it.n }}</span><span style="flex:1;min-width:0;font-size:15px;line-height:1.45;color:#3E3830">{{ it.label }}</span></label>
+      </sc-for>
+    </div>
+    <div class="no-print" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;padding-top:24px;border-top:1px solid #F0EBE4">
+      <button onClick="{{ imprimir }}" data-ficha-id="3" style="padding:13px 24px;border:none;border-radius:10px;background:var(--accent);color:#fff;font-family:Sora,sans-serif;font-weight:700;font-size:15px;cursor:pointer" style-hover="filter:brightness(1.08)">Salvar em PDF</button>
+      <button onClick="{{ copiar }}" data-ficha-id="3" style="padding:13px 24px;border:1px solid #201C18;border-radius:10px;background:#fff;color:#201C18;font-family:Sora,sans-serif;font-weight:700;font-size:15px;cursor:pointer" style-hover="background:#F0EBE4">Copiar texto</button>
+    </div>
+  </article>
+  <div class="no-print" aria-live="polite" style="margin-top:18px;font-size:14px;color:var(--accent);font-weight:600;min-height:22px">{{ aviso }}</div>
+  <div class="no-print" style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between;margin-top:10px;padding:18px 22px;background:#F7F4EF;border:1px solid #E7E1D9;border-radius:14px">
+    <p style="margin:0;font-size:14px;color:#4A443E;max-width:620px;text-wrap:pretty">O que você digita é guardado automaticamente neste navegador e reaparece se a página for recarregada ou reaberta no mesmo aparelho. Nada é enviado para servidor. <strong style="color:#201C18">{{ statusSalvo }}</strong></p>
+    <button onClick="{{ apagarTudo }}" style="padding:11px 20px;border:1px solid #B5AEA5;border-radius:10px;background:#fff;color:#4A443E;font-family:Sora,sans-serif;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap" style-hover="border-color:#201C18;color:#201C18">Apagar respostas salvas</button>
+  </div>
+</section>
+
+<section id="para-2110" data-reveal="" style="max-width:1120px;margin:0 auto;padding:92px 28px;scroll-margin-top:86px;border-top:1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">07 · Para 21/10</div>
+  <h2 style="margin:0 0 40px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:760px;text-wrap:balance">O que trazer na próxima aula</h2>
+  <div class="card" style="background:color-mix(in oklab,var(--accent) 7%,white);border:1px solid color-mix(in oklab,var(--accent) 22%,white);border-radius:20px;padding:36px;margin-bottom:28px">
+    <div style="font-family:Sora,sans-serif;font-weight:800;font-size:clamp(2.6rem,6vw,4rem);line-height:1;color:var(--accent);letter-spacing:-0.03em;margin-bottom:24px">21/10</div>
+    <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:16px">
+      <li style="display:flex;gap:14px;align-items:start;font-size:17px;color:#201C18"><span style="width:24px;height:24px;border:2px solid var(--accent);border-radius:7px;flex-shrink:0;background:#fff;margin-top:2px"></span><span>O relatório da Avaliação 3, com as dez partes, feito sobre os próprios dados.</span></li>
+      <li style="display:flex;gap:14px;align-items:start;font-size:17px;color:#201C18"><span style="width:24px;height:24px;border:2px solid var(--accent);border-radius:7px;flex-shrink:0;background:#fff;margin-top:2px"></span><span>Pelo menos 15 alternativas para o próprio projeto, geradas com no mínimo duas das técnicas de hoje, partindo das próprias diretrizes.</span></li>
+    </ul>
+  </div>
+  <p style="margin:0;font-size:17px;color:#3E3830;max-width:820px;text-wrap:pretty">A aula de 21/10 começa com dúvidas de síntese e de relatório. Em seguida, as alternativas de cada grupo vão para o mural anônimo, ganham conceito e passam pela matriz de decisão, cujos critérios saem das diretrizes do relatório.</p>
+</section>
+
+<section id="referencias" data-reveal="" style="max-width:1120px;margin:0 auto;padding:92px 28px 80px;scroll-margin-top:86px;border-top:1px solid #E7E1D9">
+  <div style="font-family:Sora,sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">08 · Referências</div>
+  <h2 style="margin:0 0 44px;font-family:Sora,sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;max-width:760px;text-wrap:balance">Bibliografia desta aula</h2>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Básica</h3>
+  <ul style="margin:0 0 44px;padding:0;list-style:none;max-width:900px">
+    <li style="padding:14px 0;font-size:15px;color:#3E3830;border-top:1px solid #E7E1D9">PHILLIPS, Peter L. <a href="https://app.minhabiblioteca.com.br/books/9788521209522" target="_blank" rel="noopener"><em>Briefing</em>: a gestão do projeto de design</a>. 2. ed. São Paulo: Blucher, 2017.</li>
+    <li style="padding:14px 0;font-size:15px;color:#3E3830;border-top:1px solid #E7E1D9;border-bottom:1px solid #E7E1D9">PAZMINO, Ana Veronica. <a href="https://app.minhabiblioteca.com.br/books/9788521207054" target="_blank" rel="noopener"><em>Como se cria</em>: 40 métodos para design de produtos</a>. São Paulo: Blucher, 2015.</li>
+  </ul>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Complementar</h3>
+  <ul style="margin:0 0 44px;padding:0;list-style:none;max-width:900px">
+    <li style="padding:14px 0;font-size:15px;color:#3E3830;border-top:1px solid #E7E1D9">BAXTER, Mike. <a href="https://app.minhabiblioteca.com.br/books/9788521214380" target="_blank" rel="noopener"><em>Projeto de produto</em>: guia prático para o design de novos produtos</a>. São Paulo: Blucher, 2011.</li>
+    <li style="padding:14px 0;font-size:15px;color:#3E3830;border-top:1px solid #E7E1D9">KELLEY, Tom; LITTMAN, Jonathan. <em>A arte da inovação</em>: lições de criatividade da IDEO, a maior empresa norte-americana de design. 2. ed. São Paulo: Futura, 2002. <span style="font-size:13px;color:#756E66">— acervo físico da Biblioteca Central</span></li>
+    <li style="padding:14px 0;font-size:15px;color:#3E3830;border-top:1px solid #E7E1D9;border-bottom:1px solid #E7E1D9">LUPTON, Ellen (org.). <em>Intuição, ação, criação</em>: graphic design thinking. São Paulo: Gustavo Gili, 2013. <span style="font-size:13px;color:#756E66">— acervo físico da Biblioteca Central</span></li>
+  </ul>
+  <h3 style="margin:0 0 18px;font-family:Sora,sans-serif;font-size:20px;font-weight:700">Fora da bibliografia do plano, citada como origem das técnicas</h3>
+  <ul style="margin:0;padding:0;list-style:none;max-width:900px">
+    <li style="padding:14px 0;font-size:15px;color:#3E3830;border-top:1px solid #E7E1D9;border-bottom:1px solid #E7E1D9">OSBORN, Alex F. <em>Applied imagination</em>: principles and procedures of creative thinking. New York: Scribner, 1953.</li>
+  </ul>
+</section>
+<footer style="border-top:1px solid #E7E1D9;padding:32px 28px 40px">
+  <div style="max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:13px;color:#756E66">
+    <span>Metodologia do Projeto de Design · FURB · 2026/2</span>
+    <span>Aula 7 — 14/10/2026 · Prof. Renato Valderramas</span>
+  </div>
+</footer>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;accent&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#D9481C&quot;, &quot;options&quot;: [&quot;#D9481C&quot;, &quot;#1D5BD8&quot;, &quot;#0F7B5F&quot;, &quot;#6F3BC8&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Aparência&quot;},
+  &quot;animacoes&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Aparência&quot;}
+}">
+const F1 = [
+  ["Quem são", "Com características que importam para o projeto."],
+  ["Onde e quando o problema aparece", "Onde e quando o problema aparece para eles."],
+  ["O que fazem hoje", "O que fazem hoje para lidar com ele."],
+  ["O que incomoda", "O que incomoda ou atrapalha."],
+  ["O que valorizam", "O que valorizam."],
+  ["O que não pode ser exigido deles", "Como tempo, dinheiro, força ou conhecimento técnico."]
+];
+const CK2 = ["aponta para evidência", "não descreve a solução", "é verificável", "ajuda a descartar alternativas"];
+const REL = [
+  "Problema e perguntas de pesquisa, retomados do briefing.",
+  "Técnicas aplicadas: quais, com quem, quando, quantas pessoas, e por que cada uma. Pelo menos três.",
+  "Resultados de cada técnica, resumidos.",
+  "Matriz de similares completa, com a conclusão de cada linha e os critérios que nenhum similar atende.",
+  "Foto do agrupamento por afinidade, com os títulos-frase dos grupos.",
+  "Descrição do público-alvo nos seis campos, com evidências.",
+  "Painel do estilo de vida, com as palavras-resumo e o crédito das imagens.",
+  "De cinco a oito diretrizes, cada uma na fórmula de três partes e apontando para os dados.",
+  "Anexos: roteiros, questionários, termos de consentimento, anotações de campo.",
+  "Referências e créditos, conforme a ABNT."
+];
+const STATIC = [];
+["f1","f2","f3"].forEach((p) => ["grupo","integrantes","tema"].forEach((s) => STATIC.push(p + "_" + s)));
+const range = (n) => { const a = []; for (let i = 0; i < n; i++) a.push(i); return a; };
+
+class Component extends DCLogic {
+  CHAVE = "mpd-aula7-v1";
+  state = { f: {}, aviso: "", statusSalvo: "" };
+
+  grow(t) { if (this._autoFit) this._autoFit(t); }
+  growAll(root) { (root || document).querySelectorAll("textarea").forEach((t) => this.grow(t)); }
+
+  texto(fid) {
+    const f = this.state.f;
+    const g = (k) => ((f[k] || "") + "").trim() || "—";
+    const titulos = { "1": "Ficha 1 — Público-alvo", "2": "Ficha 2 — Diretrizes", "3": "Ficha 3 — Checklist do relatório da Avaliação 3" };
+    const p = "f" + fid;
+    const L = [titulos[fid], "", "Nome do grupo: " + g(p + "_grupo"), "Integrantes: " + g(p + "_integrantes"), "Tema: " + g(p + "_tema"), ""];
+    if (fid === "1") {
+      F1.forEach((c, i) => L.push((i + 1) + ". " + c[0] + ": " + g("f1.c" + i) + " (Evidência: " + g("f1.c" + i + ".ev") + ")"));
+      L.push("", "PÚBLICOS SECUNDÁRIOS");
+      range(4).forEach((i) => L.push((i + 1) + ". " + g("f1.s" + i + ".p") + " — " + g("f1.s" + i + ".d")));
+    } else if (fid === "2") {
+      range(8).forEach((i) => {
+        const b = "f2.b" + i;
+        const ck = CK2.filter((c, j) => f[b + ".ck" + j]);
+        L.push("DIRETRIZ " + (i + 1));
+        L.push("Observamos que " + g(b + ".obs"));
+        L.push("Isso significa que " + g(b + ".sig"));
+        L.push("Portanto, o projeto deve " + g(b + ".port"));
+        L.push("Dados de origem: " + g(b + ".dados"));
+        L.push("Verificação: " + (ck.length ? ck.join(", ") : "—"), "");
+      });
+    } else if (fid === "3") {
+      const n = REL.filter((r, i) => f["f3.ck" + i]).length;
+      L.push("Progresso: " + n + " de 10", "");
+      REL.forEach((r, i) => L.push("[" + (f["f3.ck" + i] ? "x" : " ") + "] " + (i + 1) + ". " + r));
+    }
+    return L.join("\n");
+  }
+
+  renderVals() {
+    const st = this.state, f = st.f;
+    const g = (k) => (f[k] == null ? "" : f[k]);
+    const v = {};
+    STATIC.forEach((k) => { v[k] = g(k); });
+    const f3n = REL.filter((r, i) => !!f["f3.ck" + i]).length;
+    return {
+      v,
+      on: (e) => {
+        const t = e.target, k = t.getAttribute("data-k");
+        if (!k) return;
+        const val = t.type === "checkbox" ? t.checked : t.value;
+        if (t.tagName === "TEXTAREA") this.grow(t);
+        this.setState((s) => ({ f: Object.assign({}, s.f, { [k]: val }) }));
+      },
+      f1campos: F1.map((c, i) => ({ n: i + 1, titulo: c[0], instr: c[1], k: "f1.c" + i, v: g("f1.c" + i), ek: "f1.c" + i + ".ev", ev: g("f1.c" + i + ".ev") })),
+      f1sec: range(4).map((i) => ({ n: i + 1, pk: "f1.s" + i + ".p", pv: g("f1.s" + i + ".p"), dk: "f1.s" + i + ".d", dv: g("f1.s" + i + ".d") })),
+      f2blocos: range(8).map((i) => {
+        const b = "f2.b" + i;
+        return { n: i + 1, ok: b + ".obs", ov: g(b + ".obs"), sk: b + ".sig", sv: g(b + ".sig"), pk: b + ".port", pv: g(b + ".port"), dk: b + ".dados", dv: g(b + ".dados"),
+          checks: CK2.map((label, j) => ({ k: b + ".ck" + j, v: !!f[b + ".ck" + j], label })) };
+      }),
+      f3itens: REL.map((label, i) => ({ n: i + 1, label, k: "f3.ck" + i, v: !!f["f3.ck" + i] })),
+      f3n, f3pct: (f3n * 10) + "%", f3progTxt: f3n + " de 10",
+      aviso: st.aviso, statusSalvo: st.statusSalvo,
+      imprimir: (e) => this.imprimir(e.currentTarget.getAttribute("data-ficha-id")),
+      copiar: (e) => this.copiar(this.texto(e.currentTarget.getAttribute("data-ficha-id"))),
+      apagarTudo: () => {
+        if (!window.confirm("Apagar tudo o que foi digitado nas três fichas deste navegador?")) return;
+        try { localStorage.removeItem(this.CHAVE); } catch (err) {}
+        this.setState({ f: {}, statusSalvo: "Respostas apagadas." });
+        requestAnimationFrame(() => document.querySelectorAll("#fichas textarea").forEach((t) => { t.style.height = ""; }));
+      }
+    };
+  }
+
+  imprimir(fid) {
+    const el = document.getElementById("ficha-" + fid);
+    if (!el) return;
+    this.growAll(el);
+    const ocultos = [];
+    let node = el;
+    while (node && node !== document.body && node.parentElement) {
+      const pai = node.parentElement;
+      Array.from(pai.children).forEach((ch) => {
+        if (ch !== node && ch.tagName !== "SCRIPT" && ch.tagName !== "STYLE") { ocultos.push([ch, ch.style.display]); ch.style.display = "none"; }
+      });
+      node = pai;
+    }
+    const pg = document.createElement("style");
+    pg.textContent = "@page{size:A4 portrait;margin:14mm}";
+    document.head.appendChild(pg);
+    el.setAttribute("data-print-me", "");
+    document.documentElement.setAttribute("data-printing", "");
+    let feito = false;
+    const limpa = () => {
+      if (feito) return; feito = true;
+      ocultos.forEach(([ch, d]) => { ch.style.display = d; });
+      pg.remove(); el.removeAttribute("data-print-me");
+      document.documentElement.removeAttribute("data-printing");
+    };
+    window.addEventListener("afterprint", limpa, { once: true });
+    setTimeout(() => { window.print(); setTimeout(limpa, 800); }, 60);
+  }
+  copiar(txt) {
+    const ok = () => { this.setState({ aviso: "Texto copiado para a área de transferência." }); clearTimeout(this._tAviso); this._tAviso = setTimeout(() => this.setState({ aviso: "" }), 3000); };
+    const fallback = () => {
+      const ta = document.createElement("textarea");
+      ta.value = txt; ta.style.position = "fixed"; ta.style.left = "-9999px";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); ok(); } catch (err) { this.setState({ aviso: "Não foi possível copiar automaticamente." }); }
+      document.body.removeChild(ta);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok).catch(fallback);
+    else fallback();
+  }
+  persistir() {
+    try {
+      localStorage.setItem(this.CHAVE, JSON.stringify({ f: this.state.f }));
+      const h = new Date(), p = (x) => (x < 10 ? "0" + x : "" + x);
+      this.setState({ statusSalvo: "Salvo às " + p(h.getHours()) + ":" + p(h.getMinutes()) + "." });
+    } catch (err) { this.setState({ statusSalvo: "Não foi possível salvar neste navegador." }); }
+  }
+  applyAccent() { document.documentElement.style.setProperty("--accent", this.props.accent ?? "#D9481C"); }
+  componentDidMount() {
+    this._autoFit = (t) => {
+      if (!t || t.tagName !== "TEXTAREA" || !t.offsetParent) return;
+      const cs = getComputedStyle(t);
+      t.style.overflow = "hidden";
+      t.style.height = "auto";
+      t.style.height = Math.ceil(t.scrollHeight + parseFloat(cs.borderTopWidth || 0) + parseFloat(cs.borderBottomWidth || 0)) + "px";
+    };
+    this._fitAll = () => document.querySelectorAll("textarea").forEach((t) => this._autoFit(t));
+    this._onAnyInput = (e) => this._autoFit(e.target);
+    document.addEventListener("input", this._onAnyInput, true);
+    window.addEventListener("resize", this._fitAll);
+    window.addEventListener("beforeprint", this._fitAll);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => this._fitAll());
+    setTimeout(this._fitAll, 300);
+    this._mo = new MutationObserver(() => { cancelAnimationFrame(this._moRaf); this._moRaf = requestAnimationFrame(this._fitAll); });
+    this._mo.observe(document.querySelector("main") || document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["open", "class"] });
+    this._cleanupFit = () => {
+      document.removeEventListener("input", this._onAnyInput, true);
+      window.removeEventListener("resize", this._fitAll);
+      window.removeEventListener("beforeprint", this._fitAll);
+      if (this._mo) this._mo.disconnect();
+      cancelAnimationFrame(this._moRaf);
+    };
+    this.applyAccent();
+    let d = null;
+    try { d = JSON.parse(localStorage.getItem(this.CHAVE) || "null"); } catch (err) { d = null; }
+    if (d && d.f) { this._restaurado = true; this.setState({ f: d.f, statusSalvo: "Respostas anteriores recuperadas." }); }
+    setTimeout(() => this.growAll(document.getElementById("fichas")), 120);
+    this._onResize = () => this.growAll(document.getElementById("fichas"));
+    window.addEventListener("resize", this._onResize);
+    if (this.props.animacoes ?? true) {
+      document.documentElement.classList.add("anim");
+      const io = new IntersectionObserver((es) => es.forEach((x) => { if (x.isIntersecting) { x.target.classList.add("rv"); io.unobserve(x.target); } }), { threshold: 0.03 });
+      document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+      this._io = io;
+    }
+  }
+  componentDidUpdate(pp, ps) {
+    this.applyAccent();
+    if (ps.f !== this.state.f) {
+      requestAnimationFrame(() => this.growAll(document.getElementById("fichas")));
+      if (this._restaurado) { this._restaurado = false; return; }
+      clearTimeout(this._tSalvar);
+      this._tSalvar = setTimeout(() => this.persistir(), 500);
+    }
+  }
+  componentWillUnmount() {
+    if (this._cleanupFit) this._cleanupFit();
+    clearTimeout(this._tSalvar); clearTimeout(this._tAviso);
+    window.removeEventListener("resize", this._onResize);
+    if (this._io) this._io.disconnect();
+  }
+}
+</script>
+</body>
+</html>
